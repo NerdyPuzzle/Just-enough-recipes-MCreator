@@ -4,14 +4,12 @@ import net.mcreator.element.GeneratableElement;
 import net.mcreator.element.parts.MItemBlock;
 import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.workspace.elements.ModElement;
-import net.mcreator.workspace.references.TextureReference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JeiRecipeType extends GeneratableElement {
 
-    @TextureReference(TextureType.SCREEN)
     public String textureSelector;
     public int width;
     public int height;

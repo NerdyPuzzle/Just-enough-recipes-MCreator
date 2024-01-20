@@ -96,7 +96,6 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
     public void reloadDataLists() {
         super.reloadDataLists();
-        slotList.reloadDataLists();
     }
 
     protected AggregatedValidationResult validatePage(int page) {

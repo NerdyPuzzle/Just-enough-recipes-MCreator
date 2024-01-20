@@ -1,0 +1,77 @@
+---
+forge-1.19.2:
+  gradle: |
+    repositories {
+      maven {
+        name = "Progwml6's maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+      }
+      maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+      }
+      maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+      }
+    }
+    
+    dependencies {
+        compileOnly(fg.deobf("mezz.jei:jei-1.19.2-common-api:11.6.0.1018"))
+        compileOnly(fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.6.0.1018"))
+        runtimeOnly(fg.deobf("mezz.jei:jei-1.19.2-forge:11.6.0.1018"))
+    }
+  update_files:
+    - ~
+
+forge-1.19.4:
+  gradle: |
+    repositories {
+      maven {
+        name = "Progwml6's maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+      }
+      maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+      }
+      maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+      }
+    }
+    
+    dependencies {
+        compileOnly(fg.deobf("mezz.jei:jei-1.19.4-common-api:13.1.0.16"))
+        compileOnly(fg.deobf("mezz.jei:jei-1.19.4-forge-api:13.1.0.16"))
+        runtimeOnly(fg.deobf("mezz.jei:jei-1.19.4-forge:13.1.0.16"))
+    }
+  update_files:
+    - ~
+
+forge-1.20.1:
+  gradle: |
+    repositories {
+      maven {
+        name = "Progwml6's maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+      }
+      maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+      }
+      maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+      }
+    }
+    
+    dependencies {
+        compileOnly(fg.deobf("mezz.jei:jei-1.20.1-common-api:15.2.0.27"))
+        compileOnly(fg.deobf("mezz.jei:jei-1.20.1-forge-api:15.2.0.27"))
+        runtimeOnly(fg.deobf("mezz.jei:jei-1.20.1-forge:15.2.0.27"))
+    }
+  update_files:
+    - ~
+
+name: "Just enough items"

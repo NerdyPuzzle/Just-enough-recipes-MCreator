@@ -32,7 +32,7 @@ public class JeiSlotList extends JEntriesList {
             this.registerEntryUI(entry);
         });
         this.add("Center", PanelUtils.pullElementUp(this.entries));
-        this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder((Color)UIManager.get("MCreatorLAF.BRIGHT_COLOR"), 1), L10N.t("elementgui.potion.effects", new Object[0]), 0, 0, this.getFont().deriveFont(12.0F), (Color)UIManager.get("MCreatorLAF.BRIGHT_COLOR")));
+        this.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder((Color)UIManager.get("MCreatorLAF.BRIGHT_COLOR"), 1), L10N.t("elementgui.jeirecipetype.slots", new Object[0]), 0, 0, this.getFont().deriveFont(12.0F), (Color)UIManager.get("MCreatorLAF.BRIGHT_COLOR")));
     }
 
     public List<JeiRecipeType.JeiSlotListEntry> getEntries() {

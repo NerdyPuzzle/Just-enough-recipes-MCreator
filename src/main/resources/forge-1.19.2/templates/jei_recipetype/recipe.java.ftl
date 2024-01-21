@@ -1,4 +1,4 @@
-package ${package}.jei_recipes
+package ${package}.jei_recipes;
 
 <#compress>
 //public class ${name}Recipe implements Recipe<SimpleContainer> {

@@ -1,4 +1,4 @@
-package ${package}.init
+package ${package}.init;
 
 //@Mod.EventBusSubscriber
 //public class ${JavaModName}RecipeTypes {

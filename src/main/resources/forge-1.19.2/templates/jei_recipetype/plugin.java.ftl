@@ -1,6 +1,6 @@
 <#include "../mcitems.ftl">
 
-package ${package}.init
+package ${package}.init;
 
 <#compress>
 //@JeiPlugin

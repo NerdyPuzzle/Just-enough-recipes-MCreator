@@ -9,7 +9,7 @@
     ${items[0..(items?last_index_of(',') - 1)]}
   ],
   "output": {
-    ${mappedMCItemToItemObjectJSON(data.result)},
+    ${mappedMCItemToIngameItemName(data.result)},
     "count": ${data.count}
   }
 }

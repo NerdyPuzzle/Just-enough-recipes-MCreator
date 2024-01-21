@@ -2,7 +2,6 @@ package net.nerdypuzzle.jei.elements;
 
 import net.mcreator.element.GeneratableElement;
 import net.mcreator.element.parts.MItemBlock;
-import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.workspace.elements.ModElement;
 
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ public class JeiRecipeType extends GeneratableElement {
     public int height;
     public MItemBlock icon;
     public MItemBlock craftingtable;
+    public boolean enableCraftingtable;
     public String title;
     public List<JeiSlotListEntry> slotList = new ArrayList<>();
 

@@ -36,7 +36,9 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 	@Override
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
 	    <#list jeirecipetypes as type>
-	        registration.addRecipeCatalyst(new ItemStack(${mappedMCItemToItem(type.craftingtable)}), ${type.getModElement().getName()}_Type);
+	        <#if type.enableCraftingtable>
+	            registration.addRecipeCatalyst(new ItemStack(${mappedMCItemToItem(type.craftingtable)}), ${type.getModElement().getName()}_Type);
+	        </#if>
 	    </#list>
 	}
 

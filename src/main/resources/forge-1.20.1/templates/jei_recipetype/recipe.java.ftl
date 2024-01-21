@@ -1,7 +1,6 @@
 package ${package}.jei_recipes;
 
 <#compress>
-private final ResourceLocation id;
 
 import javax.annotation.Nullable;
 

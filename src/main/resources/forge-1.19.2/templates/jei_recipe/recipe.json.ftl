@@ -4,7 +4,7 @@
   "ingredients": [
     <#assign items = "">
     <#list data.ingredients as item>
-        <#assign items += "{${mappedMCItemToItemObjectJSON(item)}},">
+        <#assign items += "{${mappedMCItemToIngameItemName(item)}},">
     </#list>
     ${items[0..(items?last_index_of(',') - 1)]}
   ],

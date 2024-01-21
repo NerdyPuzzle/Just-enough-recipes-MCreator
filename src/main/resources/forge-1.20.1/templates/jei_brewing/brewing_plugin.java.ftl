@@ -10,14 +10,21 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
     	return new ResourceLocation("${modid}:brewing_recipes");
     }
 
+    <#assign brewingRecipes = []>
+    <#list recipes as recipe>
+        <#if recipe.recipeType == "Brewing">
+            <#assign brewingRecipes += [recipe]>
+        </#if>
+    </#list>
+
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        <#if w.getRecipesOfType("Brewing")??>
+        <#if brewingRecipes??>
             IVanillaRecipeFactory factory = registration.getVanillaRecipeFactory();
             List<IJeiBrewingRecipe> brewingRecipes = new ArrayList<>();
-		    <#list w.getRecipesOfType("Brewing") as recipe>
+		    <#list brewingRecipes as recipe>
                 brewingRecipes.add(factory.createBrewingRecipe(
-                    List.of(${mappedMCItemToItemStackCode(recipe.getGeneratableElement().brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.getGeneratableElement().brewingInputStack)}, ${mappedMCItemToItemStackCode(recipe.getGeneratableElement().brewingReturnStack)}));
+                    List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.brewingInputStack)}, ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
 		    </#list>
 		    registration.addRecipes(RecipeTypes.BREWING, brewingRecipes);
 		</#if>

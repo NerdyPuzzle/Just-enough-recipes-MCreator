@@ -23,8 +23,10 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
             IVanillaRecipeFactory factory = registration.getVanillaRecipeFactory();
             List<IJeiBrewingRecipe> brewingRecipes = new ArrayList<>();
 		    <#list brewingRecipes as recipe>
-                brewingRecipes.add(factory.createBrewingRecipe(
-                    List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.brewingInputStack)}, ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
+		        <#if !recipe.brewingReturnStack?starts_with("POTION:") && !recipe.brewingInputStack?starts_with("POTION:")>
+                    brewingRecipes.add(factory.createBrewingRecipe(
+                        List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.brewingInputStack)}, ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
+		        </#if>
 		    </#list>
 		    registration.addRecipes(RecipeTypes.BREWING, brewingRecipes);
 		</#if>

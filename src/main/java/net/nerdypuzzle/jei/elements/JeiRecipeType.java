@@ -17,6 +17,7 @@ public class JeiRecipeType extends GeneratableElement {
     public int height;
     public MItemBlock icon;
     public MItemBlock craftingtable;
+    public boolean enableCraftingtable;
     public String title;
     public List<JeiSlotListEntry> slotList = new ArrayList<>();
 
@@ -30,9 +31,7 @@ public class JeiRecipeType extends GeneratableElement {
     }
 
 
-    public JeiRecipeType(ModElement element) {
-        super(element);
-    }
+    public JeiRecipeType(ModElement element) { super(element); }
 
     public int getIngredientCount() {
         int count = 0;

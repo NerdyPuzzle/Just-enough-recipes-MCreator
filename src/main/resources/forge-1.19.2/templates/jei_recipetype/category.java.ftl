@@ -1,9 +1,7 @@
 <#include "../mcitems.ftl">
 
-package ${package}.jei_recipes
+package ${package}.jei_recipes;
 
-//public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
-//    public final static ResourceLocation UID = new ResourceLocation("${modid}", "${data.getModElement().getRegistryName()}");
 public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
     public final static ResourceLocation UID = new ResourceLocation("${modid}", "${data.getModElement().getRegistryName()}");
     public final static ResourceLocation TEXTURE =

@@ -1,9 +1,5 @@
-package ${package}.init
+package ${package}.init;
 
-//@Mod.EventBusSubscriber
-//public class ${JavaModName}RecipeTypes {
-//    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =
-//                DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, "${modid}");
 @Mod.EventBusSubscriber(modid = ${JavaModName}.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ${JavaModName}RecipeTypes {
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS =

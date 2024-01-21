@@ -1,3 +1,5 @@
+<#include "../mcitems.ftl">
+
 package ${package}.init
 
 <#compress>
@@ -36,6 +38,13 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
             List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = recipeManager.getAllRecipesFor(${type.getModElement().getName()}Recipe.Type.INSTANCE);
             registration.addRecipes(${type.getModElement().getName()}_Type, ${type.getModElement().getName()}Recipes);
 		</#list>
+	}
+
+	@Override
+	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+	    <#list jeirecipetypes as type>
+	        registration.addRecipeCatalyst(new ItemStack(${mappedMCItemToItem(type.craftingtable)}), ${type.getModElement().getName()}_Type);
+	    </#list>
 	}
 
 }</#compress>

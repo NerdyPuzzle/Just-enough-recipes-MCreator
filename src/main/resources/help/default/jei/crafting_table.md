@@ -1,0 +1,1 @@
+This is the crafting table that is used to make the recipes you will include in this category. By registering it here, users will be able to find the recipes the table crafts by hovering over it and clicking U in JEI.

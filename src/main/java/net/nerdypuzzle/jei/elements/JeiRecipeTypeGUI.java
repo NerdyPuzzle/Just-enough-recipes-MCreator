@@ -31,6 +31,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
     private final VTextField title;
     private MCItemHolder icon;
+    private MCItemHolder craftingtable;
     private final VComboBox<String> textureSelector;
     private JeiSlotList slotList;
     private JSpinner width;
@@ -53,15 +54,18 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     protected void initGUI() {
         textureSelector.setRenderer(new WTextureComboBoxRenderer.TypeTextures(mcreator.getWorkspace(), TextureType.SCREEN));
         icon = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
+        craftingtable = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
 
         JPanel pane1 = new JPanel(new BorderLayout());
         pane1.setOpaque(false);
-        JPanel mainPanel = new JPanel(new GridLayout(4, 2, 0, 2));
+        JPanel mainPanel = new JPanel(new GridLayout(5, 2, 0, 2));
         mainPanel.setOpaque(false);
         mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/title"), L10N.label("elementgui.jeirecipetype.title", new Object[0])));
         mainPanel.add(title);
         mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/icon"), L10N.label("elementgui.jeirecipetype.icon", new Object[0])));
         mainPanel.add(icon);
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/crafting_table"), L10N.label("elementgui.jeirecipetype.crafting_table", new Object[0])));
+        mainPanel.add(craftingtable);
         mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/background"), L10N.label("elementgui.jeirecipetype.background", new Object[0])));
         mainPanel.add(textureSelector);
         JPanel subPanel1 = new JPanel(new GridLayout(1, 3, 0, 1));
@@ -109,6 +113,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     protected void openInEditingMode(JeiRecipeType jeiRecipe) {
         title.setText(jeiRecipe.title);
         icon.setBlock(jeiRecipe.icon);
+        craftingtable.setBlock(jeiRecipe.craftingtable);
         textureSelector.setSelectedItem(jeiRecipe.textureSelector);
         slotList.setEntries(jeiRecipe.slotList);
         width.setValue(jeiRecipe.width);
@@ -119,6 +124,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         JeiRecipeType recipe = new JeiRecipeType(this.modElement);
         recipe.textureSelector = textureSelector.getSelectedItem();
         recipe.icon = icon.getBlock();
+        recipe.craftingtable = craftingtable.getBlock();
         recipe.title = title.getText();
         recipe.slotList = slotList.getEntries();
         recipe.width = (int) width.getValue();

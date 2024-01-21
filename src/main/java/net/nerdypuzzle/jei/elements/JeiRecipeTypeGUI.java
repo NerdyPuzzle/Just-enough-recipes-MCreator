@@ -107,6 +107,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
         if (!this.isEditingMode()) {
             title.setText(StringUtils.machineToReadableName(this.modElement.getName()));
+            craftingtable.setEnabled(enableCraftingtable.isSelected());
         }
 
         addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1);

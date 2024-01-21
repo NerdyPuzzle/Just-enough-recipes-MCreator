@@ -3,13 +3,6 @@
 package ${package}.init;
 
 <#compress>
-//@JeiPlugin
-//
-//	// Type instances here
-//
-//	@Override
-//	public ResourceLocation getPluginUid() {
-//		return new ResourceLocation("${modid}:jei_plugin");
 @JeiPlugin
 public class ${JavaModName}JeiPlugin implements IModPlugin {
     <#list jeirecipetypes as type>

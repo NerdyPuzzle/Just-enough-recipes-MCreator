@@ -1,7 +1,5 @@
 package net.nerdypuzzle.jei.elements;
 
-import net.mcreator.element.ModElementType;
-import net.mcreator.element.parts.MItemBlock;
 import net.mcreator.minecraft.ElementUtil;
 import net.mcreator.ui.MCreator;
 import net.mcreator.ui.component.SearchableComboBox;

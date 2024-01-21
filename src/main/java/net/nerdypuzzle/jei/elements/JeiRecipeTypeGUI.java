@@ -3,7 +3,6 @@ package net.nerdypuzzle.jei.elements;
 import net.mcreator.minecraft.ElementUtil;
 import net.mcreator.ui.MCreator;
 import net.mcreator.ui.component.JEmptyBox;
-import net.mcreator.ui.component.JMinMaxSpinner;
 import net.mcreator.ui.component.SearchableComboBox;
 import net.mcreator.ui.component.util.ComponentUtils;
 import net.mcreator.ui.component.util.PanelUtils;
@@ -108,6 +107,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
         if (!this.isEditingMode()) {
             title.setText(StringUtils.machineToReadableName(this.modElement.getName()));
+            craftingtable.setEnabled(enableCraftingtable.isSelected());
         }
 
         addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1);

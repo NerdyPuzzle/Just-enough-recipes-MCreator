@@ -12,7 +12,7 @@
                     if (!ingredients.get(${entry?index}).test(${mappedMCItemToItemStackCode(entry)}))
                         continue;
                 </#list>
-                return recipe.getResultItem(null);
+                return recipe.getResultItem();
             }
         }
         return ItemStack.EMPTY;

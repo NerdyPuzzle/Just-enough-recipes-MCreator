@@ -22,23 +22,23 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
         <#if brewingRecipes??>
             IVanillaRecipeFactory factory = registration.getVanillaRecipeFactory();
             List<IJeiBrewingRecipe> brewingRecipes = new ArrayList<>();
+            ItemStack potion = new ItemStack(Items.POTION);
+            ItemStack potion2 = new ItemStack(Items.POTION);
 		    <#list brewingRecipes as recipe>
 		        <#if recipe.brewingReturnStack?starts_with("POTION:") || recipe.brewingInputStack?starts_with("POTION:")>
-		            ItemStack potion = new ItemStack(Items.POTION);
 		                <#if recipe.brewingReturnStack?starts_with("POTION:") && recipe.brewingInputStack?starts_with("POTION:")>
-                            ItemStack potion2 = new ItemStack(Items.POTION);
                             PotionUtils.setPotion(potion, ${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")});
                             PotionUtils.setPotion(potion2, ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
                             brewingRecipes.add(factory.createBrewingRecipe(
-                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), potion, potion2));
+                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), potion.copy(), potion2.copy()));
 		                <#elseif recipe.brewingReturnStack?starts_with("POTION:")>
 		                    PotionUtils.setPotion(potion, ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
 		                    brewingRecipes.add(factory.createBrewingRecipe(
-                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.brewingInputStack)}, potion));
+                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), ${mappedMCItemToItemStackCode(recipe.brewingInputStack)}, potion.copy()));
 		                <#else>
 		                    PotionUtils.setPotion(potion, ${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")});
 		                    brewingRecipes.add(factory.createBrewingRecipe(
-                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), potion, ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
+                                List.of(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)}), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
 		                </#if>
 		        <#else>
                     brewingRecipes.add(factory.createBrewingRecipe(

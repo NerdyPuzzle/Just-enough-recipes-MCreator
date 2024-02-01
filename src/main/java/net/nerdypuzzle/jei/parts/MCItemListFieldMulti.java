@@ -13,11 +13,10 @@ import javax.swing.UIManager;
 import net.mcreator.element.parts.MItemBlock;
 import net.mcreator.minecraft.MCItem;
 import net.mcreator.ui.MCreator;
-import net.mcreator.ui.component.JItemListField;
 import net.mcreator.ui.dialogs.MCItemSelectorDialog;
 import net.mcreator.util.image.ImageUtils;
 
-public class MCItemListFieldMulti extends JItemListField<MItemBlock> {
+public class MCItemListFieldMulti extends JItemListFieldMulti<MItemBlock> {
     private final MCItem.ListProvider supplier;
     private final boolean supportTags;
 

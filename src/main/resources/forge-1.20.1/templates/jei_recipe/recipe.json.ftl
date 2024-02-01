@@ -4,7 +4,11 @@
   "ingredients": [
     <#assign items = "">
     <#list data.ingredients as item>
-        <#assign items += "{${mappedMCItemToItemObjectJSON(item)}},">
+        <#if item.getUnmappedValue() == "Blocks.AIR">
+            <#assign items += "{\"tag\": \"${modid}:jei_empty_tag\"},">
+        <#else>
+            <#assign items += "{${mappedMCItemToItemObjectJSON(item)}},">
+        </#if>
     </#list>
     ${items[0..(items?last_index_of(',') - 1)]}
   ],

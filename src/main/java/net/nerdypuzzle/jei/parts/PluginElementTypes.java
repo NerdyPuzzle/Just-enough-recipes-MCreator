@@ -10,6 +10,7 @@ public class PluginElementTypes {
     public static ModElementType<?> JEIRECIPETYPE;
     public static ModElementType<?> JEIRECIPE;
     public static ModElementType<?> ANVILRECIPE;
+    public static ModElementType<?> JEIINFORMATION;
 
     public static void load() {
 
@@ -23,6 +24,10 @@ public class PluginElementTypes {
 
         ANVILRECIPE = register(
                 new ModElementType<>("anvilrecipe", (Character) 'A', BaseType.OTHER, AnvilRecipeGUI::new, AnvilRecipe.class)
+        );
+
+        JEIINFORMATION = register(
+                new ModElementType<>("jeiinformation", (Character) 'I', BaseType.OTHER, JeiInformationGUI::new, JeiInformation.class)
         );
 
     }

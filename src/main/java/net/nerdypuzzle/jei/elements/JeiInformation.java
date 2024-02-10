@@ -16,7 +16,7 @@ public class JeiInformation extends GeneratableElement {
     public String getDescription() {
         String description = "";
         for (int i = 0; i < information.size(); i++)
-            description += i == 0 ? information.get(i) : "\n" + information.get(i);
+            description += i == 0 ? information.get(i) : "\\n" + information.get(i);
         return description;
     }
 

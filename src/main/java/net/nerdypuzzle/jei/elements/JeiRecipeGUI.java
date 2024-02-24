@@ -26,6 +26,7 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
     private MCItemHolder result;
     private final JSpinner count = new JSpinner(new SpinnerNumberModel(1, 1, 64, 1));
     private MCItemListFieldMulti ingredients;
+    private int ingredientCount = 0;
 
     public JeiRecipeGUI(MCreator mcreator, ModElement modElement, boolean editingMode) {
         super(mcreator, modElement, editingMode);
@@ -36,6 +37,24 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
     protected void initGUI() {
         ingredients = new MCItemListFieldMulti(this.mcreator, ElementUtil::loadBlocksAndItemsAndTags, false, true);
         result = new MCItemHolder(this.mcreator, ElementUtil::loadBlocksAndItems);
+
+        this.category.addActionListener((e) -> {
+            if (this.category.getSelectedItem() != null) {
+                if (!this.category.getSelectedItem().equals("No category")) {
+                    ingredientCount = this.mcreator.getWorkspace().getModElements().stream().filter((var) -> {
+                                return var.getType() == PluginElementTypes.JEIRECIPETYPE;
+                            }).map(type -> (JeiRecipeType) type.getGeneratableElement())
+                            .collect(Collectors.toList())
+                            .stream()
+                            .filter((var) -> {
+                                return var.getModElement().getRegistryName().equals(this.category.getSelectedItem());
+                            })
+                            .findFirst()
+                            .get()
+                            .getIngredientCount();
+                }
+            }
+        });
 
         JPanel pane3 = new JPanel(new BorderLayout());
         pane3.setOpaque(false);
@@ -82,6 +101,9 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.no_ingredients", new Object[0]));
         else if (result.getBlock().isEmpty())
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.no_result", new Object[0]));
+        else if (ingredients.getListElements().size() != ingredientCount) {
+            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.ingredient_mismatch", new Object[0]) + " (" + ingredients.getListElements().size() + "/" + ingredientCount + ")");
+        }
         return new AggregatedValidationResult.PASS();
     }
 

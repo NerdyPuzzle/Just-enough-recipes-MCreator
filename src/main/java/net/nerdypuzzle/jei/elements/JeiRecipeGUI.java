@@ -102,8 +102,8 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.no_ingredients", new Object[0]));
         else if (result.getBlock().isEmpty())
             return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.no_result", new Object[0]));
-        else if (ingredients.getListElements().size() - 1 != ingredientCount) {
-            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.ingredient_mismatch", new Object[0]) + " (" + ingredients.getListElements().size() + "/" + (ingredientCount + 1) + ")");
+        else if (ingredients.getListElements().size() != ingredientCount) {
+            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipe.ingredient_mismatch", new Object[0]) + " (" + ingredients.getListElements().size() + "/" + (ingredientCount) + ")");
         }
         return new AggregatedValidationResult.PASS();
     }

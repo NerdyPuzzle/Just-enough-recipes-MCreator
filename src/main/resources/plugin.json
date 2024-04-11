@@ -1,12 +1,13 @@
 {
   "id": "jei_recipes",
-  "minversion": 202300400000,
-  "maxversion": 202300499999,
   "weight": 3001,
   "javaplugin": "net.nerdypuzzle.jei.Launcher",
+  "supportedversions": [
+    202400115713
+  ],
   "info": {
     "name": "Just enough recipes",
-    "version": "1.7.3",
+    "version": "1.8",
     "description": "Adds JEI integration to MCreator",
     "author": "NerdyPuzzle"
   }

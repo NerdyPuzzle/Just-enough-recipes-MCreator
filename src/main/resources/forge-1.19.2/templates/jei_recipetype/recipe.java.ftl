@@ -1,6 +1,10 @@
 package ${package}.jei_recipes;
 
 <#compress>
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+
 import javax.annotation.Nullable;
 
 public class ${name}Recipe implements Recipe<SimpleContainer> {

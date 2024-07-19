@@ -1,54 +1,4 @@
 ---
-forge-1.19.2:
-  gradle: |
-    repositories {
-      maven {
-        name = "Progwml6's maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-      }
-      maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-      }
-      maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-      }
-    }
-    
-    dependencies {
-        compileOnly(fg.deobf("mezz.jei:jei-1.19.2-common-api:11.6.0.1020"))
-        compileOnly(fg.deobf("mezz.jei:jei-1.19.2-forge-api:11.6.0.1020"))
-        runtimeOnly(fg.deobf("mezz.jei:jei-1.19.2-forge:11.6.0.1020"))
-    }
-  update_files:
-    - ~
-
-forge-1.19.4:
-  gradle: |
-    repositories {
-      maven {
-        name = "Progwml6's maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-      }
-      maven {
-        name = "Jared's maven"
-        url = "https://maven.blamejared.com/"
-      }
-      maven {
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-      }
-    }
-    
-    dependencies {
-        compileOnly(fg.deobf("mezz.jei:jei-1.19.4-common-api:13.1.0.17"))
-        compileOnly(fg.deobf("mezz.jei:jei-1.19.4-forge-api:13.1.0.17"))
-        runtimeOnly(fg.deobf("mezz.jei:jei-1.19.4-forge:13.1.0.17"))
-    }
-  update_files:
-    - ~
-
 forge-1.20.1:
   gradle: |
     repositories {
@@ -74,7 +24,7 @@ forge-1.20.1:
   update_files:
     - ~
 
-neoforge-1.20.4:
+neoforge-1.20.6:
   gradle: |
     repositories {
       maven {
@@ -92,9 +42,9 @@ neoforge-1.20.4:
     }
     
     dependencies {
-        compileOnly("mezz.jei:jei-1.20.4-common-api:17.3.0.2")
-        compileOnly("mezz.jei:jei-1.20.4-neoforge-api:17.3.0.2")
-        runtimeOnly("mezz.jei:jei-1.20.4-neoforge:17.3.0.2")
+        compileOnly("mezz.jei:jei-1.20.6-common-api:18.0.0.65")
+        compileOnly("mezz.jei:jei-1.20.6-neoforge-api:18.0.0.65")
+        runtimeOnly("mezz.jei:jei-1.20.6-neoforge:18.0.0.65")
     }
   update_files:
     - ~

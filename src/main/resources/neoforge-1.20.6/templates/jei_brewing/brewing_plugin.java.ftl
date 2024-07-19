@@ -34,8 +34,8 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                 </#if>
 		        <#if recipe.brewingReturnStack?starts_with("POTION:") || recipe.brewingInputStack?starts_with("POTION:")>
 		                <#if recipe.brewingReturnStack?starts_with("POTION:") && recipe.brewingInputStack?starts_with("POTION:")>
-                            PotionUtils.setPotion(potion, ${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")});
-                            PotionUtils.setPotion(potion2, ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
+                            potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
+                            potion2.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")}));
                             brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), potion2.copy()));
                             ingredientStack.clear();
 		                <#elseif recipe.brewingReturnStack?starts_with("POTION:")>
@@ -44,12 +44,12 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                             <#else>
                                 inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                             </#if>
-		                    PotionUtils.setPotion(potion, ${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")});
+		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
 		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), potion.copy()));
 		                    ingredientStack.clear();
 		                    inputStack.clear();
 		                <#else>
-		                    PotionUtils.setPotion(potion, ${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")});
+		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
 		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
 		                    ingredientStack.clear();
 		                </#if>

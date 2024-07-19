@@ -28,7 +28,7 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, RegistryAccess access) {
+    public ItemStack assemble(SimpleContainer pContainer, HolderLookup.Provider provider) {
         return output;
     }
 
@@ -38,7 +38,7 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess access) {
+    public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
     }
 
@@ -60,9 +60,9 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
 
     public static class Serializer implements RecipeSerializer<${name}Recipe> {
         public static final Serializer INSTANCE = new Serializer();
-        private static final Codec<${name}Recipe> CODEC = RecordCodecBuilder.create(
+        private static final MapCodec<${name}Recipe> CODEC = RecordCodecBuilder.mapCodec(
             builder -> builder.group(
-                        ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("output").forGetter(recipe -> recipe.output),
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(recipe -> recipe.output),
                         Ingredient.CODEC_NONEMPTY
                             .listOf()
                             .fieldOf("ingredients")
@@ -82,31 +82,30 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
                     )
                     .apply(builder, ${name}Recipe::new)
         );
+        public static final StreamCodec<RegistryFriendlyByteBuf, ${name}Recipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
         @Override
-        public Codec<${name}Recipe> codec() {
+        public MapCodec<${name}Recipe> codec() {
             return CODEC;
         }
 
         @Override
-        public @Nullable ${name}Recipe fromNetwork(FriendlyByteBuf buf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readInt(), Ingredient.EMPTY);
-
-            for (int i = 0; i < inputs.size(); i++) {
-                inputs.set(i, Ingredient.fromNetwork(buf));
-            }
-
-            return new ${name}Recipe(buf.readItem(), inputs);
+        public StreamCodec<RegistryFriendlyByteBuf, ${name}Recipe> streamCodec() {
+            return STREAM_CODEC;
         }
 
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ${name}Recipe recipe) {
-            buf.writeInt(recipe.getIngredients().size());
+        private static ${name}Recipe fromNetwork(RegistryFriendlyByteBuf buf) {
+            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readVarInt(), Ingredient.EMPTY);
+            inputs.replaceAll(ingredients -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
+            return new ${name}Recipe(ItemStack.STREAM_CODEC.decode(buf), inputs);
+        }
 
+        private static void toNetwork(RegistryFriendlyByteBuf buf, ${name}Recipe recipe) {
+            buf.writeVarInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) {
-                ing.toNetwork(buf);
+                Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ing);
             }
-            buf.writeItem(recipe.getResultItem(null));
+            ItemStack.STREAM_CODEC.encode(buf, recipe.getResultItem(null));
         }
     }
 

@@ -13,7 +13,7 @@
     ${items[0..(items?last_index_of(',') - 1)]}
   ],
   "output": {
-    ${mappedMCItemToItemObjectJSON(data.result)},
+    ${mappedMCItemToItemObjectJSON(data.result, "id")},
     "count": ${data.count}
   }
 }

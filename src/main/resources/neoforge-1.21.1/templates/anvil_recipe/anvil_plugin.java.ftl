@@ -7,7 +7,7 @@ public class ${JavaModName}AnvilRecipes implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-    	return new ResourceLocation("${modid}:anvil_recipes");
+    	return ResourceLocation.parse("${modid}:anvil_recipes");
     }
 
     @Override

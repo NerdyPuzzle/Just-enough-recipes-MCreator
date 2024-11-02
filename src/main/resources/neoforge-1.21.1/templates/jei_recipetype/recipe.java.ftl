@@ -4,7 +4,7 @@ package ${package}.jei_recipes;
 
 import javax.annotation.Nullable;
 
-public class ${name}Recipe implements Recipe<SimpleContainer> {
+public class ${name}Recipe implements Recipe<RecipeInput> {
     private final ItemStack output;
     private final NonNullList<Ingredient> recipeItems;
 
@@ -14,7 +14,7 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(SimpleContainer pContainer, Level pLevel) {
+    public boolean matches(RecipeInput pContainer, Level pLevel) {
         if(pLevel.isClientSide()) {
             return false;
         }
@@ -28,7 +28,7 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer pContainer, HolderLookup.Provider provider) {
+    public ItemStack assemble(RecipeInput input, HolderLookup.Provider holder) {
         return output;
     }
 
@@ -53,9 +53,8 @@ public class ${name}Recipe implements Recipe<SimpleContainer> {
     }
 
     public static class Type implements RecipeType<${name}Recipe> {
-        private Type() { }
-        public static final Type INSTANCE = new Type();
-        public static final String ID = "${data.getModElement().getRegistryName()}";
+        private Type(){}
+        public static final RecipeType<${name}Recipe> INSTANCE = new Type();
     }
 
     public static class Serializer implements RecipeSerializer<${name}Recipe> {

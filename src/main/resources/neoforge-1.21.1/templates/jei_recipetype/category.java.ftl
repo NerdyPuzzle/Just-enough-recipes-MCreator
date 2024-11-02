@@ -3,9 +3,8 @@
 package ${package}.jei_recipes;
 
 public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
-    public final static ResourceLocation UID = new ResourceLocation("${modid}", "${data.getModElement().getRegistryName()}");
-    public final static ResourceLocation TEXTURE =
-            new ResourceLocation("${modid}", "textures/screens/${data.textureSelector}");
+    public final static ResourceLocation UID = ResourceLocation.parse("${modid}:${data.getModElement().getRegistryName()}");
+    public final static ResourceLocation TEXTURE = ResourceLocation.parse("${modid}:textures/screens/${data.textureSelector}");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -26,13 +25,23 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
     }
 
     @Override
-    public IDrawable getBackground() {
-        return this.background;
+    public IDrawable getIcon() {
+        return this.icon;
     }
 
     @Override
-    public IDrawable getIcon() {
-        return this.icon;
+    public int getWidth() {
+        return this.background.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.background.getHeight();
+    }
+
+    @Override
+    public void draw(${name}Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        this.background.draw(guiGraphics);
     }
 
     @Override

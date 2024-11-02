@@ -17,6 +17,7 @@ public class JeiRecipeType extends GeneratableElement {
     public int height;
     public MItemBlock icon;
     public MItemBlock craftingtable;
+    public List<MItemBlock> craftingtables;
     public boolean enableCraftingtable;
     public String title;
     public List<JeiSlotListEntry> slotList = new ArrayList<>();

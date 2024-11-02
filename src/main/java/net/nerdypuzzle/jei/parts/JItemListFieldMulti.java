@@ -224,11 +224,11 @@ public abstract class JItemListFieldMulti<T> extends JPanel implements IValidabl
     public List<T> getListElements() {
         List<T> retval = new ArrayList();
 
-        for(int i = 0; i < this.elementsListModel.size(); ++i) {
+        for (int i = 0; i < this.elementsListModel.size(); ++i) {
             T element = this.elementsListModel.get(i);
-            if (!(element instanceof MappableElement) || ((MappableElement)element).canProperlyMap()) {
-                retval.add(this.elementsListModel.get(i));
-            }
+            if (element instanceof MappableElement mappableElement && !mappableElement.isValidReference())
+                continue;
+            retval.add(element);
         }
 
         return retval;
@@ -237,11 +237,10 @@ public abstract class JItemListFieldMulti<T> extends JPanel implements IValidabl
     public void setListElements(@Nullable List<T> elements) {
         if (elements != null) {
             this.elementsListModel.removeAllElements();
-            Iterator var2 = elements.iterator();
-
-            while(var2.hasNext()) {
-                T el = (T) var2.next();
-                this.elementsListModel.addElement(el);
+            for (T element : elements) {
+                if (element instanceof MappableElement mappableElement && !mappableElement.isValidReference())
+                    continue;
+                elementsListModel.addElement(element);
             }
 
         }
@@ -321,10 +320,7 @@ public abstract class JItemListFieldMulti<T> extends JPanel implements IValidabl
                         this.setIcon(new ImageIcon(ImageUtils.resizeAA(MCItem.TAG_ICON.getImage(), 18)));
                     }
                 }
-
-                if (!mappableElement.canProperlyMap()) {
-                    this.setIcon(UIRES.get("18px.warning"));
-                }
+                
             } else if (value instanceof File) {
                 this.setText(FilenameUtilsPatched.removeExtension(((File)value).getName()));
             } else {

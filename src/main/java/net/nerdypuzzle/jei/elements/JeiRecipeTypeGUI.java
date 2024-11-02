@@ -9,11 +9,14 @@ import net.mcreator.ui.component.util.PanelUtils;
 import net.mcreator.ui.help.HelpUtils;
 import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.minecraft.MCItemHolder;
+import net.mcreator.ui.minecraft.MCItemListField;
 import net.mcreator.ui.modgui.ModElementGUI;
 import net.mcreator.ui.validation.AggregatedValidationResult;
 import net.mcreator.ui.validation.ValidationGroup;
 import net.mcreator.ui.validation.component.VComboBox;
 import net.mcreator.ui.validation.component.VTextField;
+import net.mcreator.ui.validation.validators.ConditionalItemListFieldValidator;
+import net.mcreator.ui.validation.validators.ItemListFieldValidator;
 import net.mcreator.ui.validation.validators.MCItemHolderValidator;
 import net.mcreator.ui.validation.validators.TextFieldValidator;
 import net.mcreator.ui.workspace.resources.TextureType;
@@ -22,6 +25,7 @@ import net.mcreator.workspace.elements.ModElement;
 import net.nerdypuzzle.jei.parts.JeiSlotList;
 import net.nerdypuzzle.jei.parts.WTextureComboBoxRenderer;
 
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -30,7 +34,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
     private final VTextField title;
     private MCItemHolder icon;
-    private MCItemHolder craftingtable;
+    private MCItemListField craftingtables;
     private JCheckBox enableCraftingtable;
     private final VComboBox<String> textureSelector;
     private JeiSlotList slotList;
@@ -41,6 +45,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     public JeiRecipeTypeGUI(MCreator mcreator, ModElement modElement, boolean editingMode) {
         super(mcreator, modElement, editingMode);
         title = new VTextField(24);
+        craftingtables = new MCItemListField(mcreator, ElementUtil::loadBlocksAndItemsAndTags, false, false);
         textureSelector= new SearchableComboBox((String[])mcreator.getFolderManager().getTexturesList(TextureType.SCREEN).stream().map(File::getName).toArray((x$0) -> {
             return new String[x$0];
         }));
@@ -55,7 +60,6 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     protected void initGUI() {
         textureSelector.setRenderer(new WTextureComboBoxRenderer.TypeTextures(mcreator.getWorkspace(), TextureType.SCREEN));
         icon = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
-        craftingtable = new MCItemHolder(mcreator, ElementUtil::loadBlocksAndItems);
 
         JPanel pane1 = new JPanel(new BorderLayout());
         pane1.setOpaque(false);
@@ -72,10 +76,10 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         enableCraftingtable.setOpaque(false);
         subPanel3.add(enableCraftingtable);
         mainPanel.add(subPanel3);
-        mainPanel.add(craftingtable);
+        mainPanel.add(craftingtables);
 
         enableCraftingtable.addActionListener((e) -> {
-            craftingtable.setEnabled(enableCraftingtable.isSelected());
+            craftingtables.setEnabled(enableCraftingtable.isSelected());
         });
 
         mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/background"), L10N.label("elementgui.jeirecipetype.background", new Object[0])));
@@ -102,12 +106,12 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         this.page1group.addValidationElement(title);
         this.icon.setValidator(new MCItemHolderValidator(this.icon));
         this.page1group.addValidationElement(icon);
-        this.craftingtable.setValidator(new MCItemHolderValidator(this.craftingtable));
-        this.page1group.addValidationElement(craftingtable);
+        this.craftingtables.setValidator(new ConditionalItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"), () -> !this.enableCraftingtable.isSelected(), false));
+        this.page1group.addValidationElement(craftingtables);
 
         if (!this.isEditingMode()) {
             title.setText(StringUtils.machineToReadableName(this.modElement.getName()));
-            craftingtable.setEnabled(enableCraftingtable.isSelected());
+            craftingtables.setEnabled(enableCraftingtable.isSelected());
         }
 
         addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1);
@@ -131,21 +135,25 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     protected void openInEditingMode(JeiRecipeType jeiRecipe) {
         title.setText(jeiRecipe.title);
         icon.setBlock(jeiRecipe.icon);
-        craftingtable.setBlock(jeiRecipe.craftingtable);
         enableCraftingtable.setSelected(jeiRecipe.enableCraftingtable);
         textureSelector.setSelectedItem(jeiRecipe.textureSelector);
         slotList.setEntries(jeiRecipe.slotList);
         width.setValue(jeiRecipe.width);
         height.setValue(jeiRecipe.height);
 
-        craftingtable.setEnabled(enableCraftingtable.isSelected());
+        if (jeiRecipe.craftingtable != null) {
+            craftingtables.setListElements(List.of(jeiRecipe.craftingtable));
+            jeiRecipe.craftingtable = null;
+        } else craftingtables.setListElements(jeiRecipe.craftingtables);
+
+        craftingtables.setEnabled(enableCraftingtable.isSelected());
     }
 
     public JeiRecipeType getElementFromGUI() {
         JeiRecipeType recipe = new JeiRecipeType(this.modElement);
         recipe.textureSelector = textureSelector.getSelectedItem();
         recipe.icon = icon.getBlock();
-        recipe.craftingtable = craftingtable.getBlock();
+        recipe.craftingtables = craftingtables.getListElements();
         recipe.enableCraftingtable = enableCraftingtable.isSelected();
         recipe.title = title.getText();
         recipe.slotList = slotList.getEntries();

@@ -16,8 +16,11 @@ import net.mcreator.workspace.elements.ModElement;
 import net.nerdypuzzle.jei.parts.MCItemListFieldMulti;
 import net.nerdypuzzle.jei.parts.PluginElementTypes;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -122,6 +125,10 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
         tab.count = (int) count.getValue();
         tab.ingredients = ingredients.getListElements();
         return tab;
+    }
+
+    @Override public @Nullable URI contextURL() throws URISyntaxException {
+        return null;
     }
 
 }

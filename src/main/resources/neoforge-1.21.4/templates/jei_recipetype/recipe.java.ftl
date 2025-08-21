@@ -4,13 +4,20 @@ package ${package}.jei_recipes;
 
 import javax.annotation.Nullable;
 
-public class ${name}Recipe implements Recipe<RecipeInput> {
-    private final ItemStack output;
-    private final NonNullList<Ingredient> recipeItems;
-
-    public ${name}Recipe(ItemStack output, NonNullList<Ingredient> recipeItems) {
+public record ${name}Recipe(ItemStack output, List<Ingredient> recipeItems) implements Recipe<RecipeInput> {
+    public ${name}Recipe(ItemStack output, List<Ingredient> recipeItems) {
         this.output = output;
         this.recipeItems = recipeItems;
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
+    }
+
+    @Override
+    public PlacementInfo placementInfo() {
+        return PlacementInfo.create(this.recipeItems);
     }
 
     @Override
@@ -22,8 +29,7 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         return false;
     }
 
-    @Override
-    public NonNullList<Ingredient> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return recipeItems;
     }
 
@@ -32,23 +38,17 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         return output;
     }
 
-    @Override
-    public boolean canCraftInDimensions(int pWidth, int pHeight) {
-        return true;
-    }
-
-    @Override
     public ItemStack getResultItem(HolderLookup.Provider provider) {
         return output.copy();
     }
 
     @Override
-    public RecipeType<?> getType() {
+    public RecipeType<? extends Recipe<RecipeInput>> getType() {
         return Type.INSTANCE;
     }
 
     @Override
-    public RecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
         return Serializer.INSTANCE;
     }
 
@@ -61,23 +61,8 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         public static final Serializer INSTANCE = new Serializer();
         private static final MapCodec<${name}Recipe> CODEC = RecordCodecBuilder.mapCodec(
             builder -> builder.group(
-                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(recipe -> recipe.output),
-                        Ingredient.CODEC_NONEMPTY
-                            .listOf()
-                            .fieldOf("ingredients")
-                            .flatXmap(
-                                ingredients -> {
-                                    Ingredient[] aingredient = ingredients
-                                              .toArray(Ingredient[]::new); // Skip the empty check and create the array.
-                                    if (aingredient.length == 0) {
-                                        return DataResult.error(() -> "No ingredients found in custom recipe");
-                                    } else {
-                                        return DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
-                                    }
-                                },
-                                DataResult::success
-                            )
-                            .forGetter(recipe -> recipe.recipeItems)
+                        ItemStack.STRICT_CODEC.fieldOf("output").forGetter(${name}Recipe::output),
+                        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(${name}Recipe::recipeItems)
                     )
                     .apply(builder, ${name}Recipe::new)
         );
@@ -94,7 +79,7 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         }
 
         private static ${name}Recipe fromNetwork(RegistryFriendlyByteBuf buf) {
-            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readVarInt(), Ingredient.EMPTY);
+            NonNullList<Ingredient> inputs = NonNullList.withSize(buf.readVarInt(), EmptyIngredient.create());
             inputs.replaceAll(ingredients -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
             return new ${name}Recipe(ItemStack.STREAM_CODEC.decode(buf), inputs);
         }
@@ -102,8 +87,8 @@ public class ${name}Recipe implements Recipe<RecipeInput> {
         private static void toNetwork(RegistryFriendlyByteBuf buf, ${name}Recipe recipe) {
             buf.writeVarInt(recipe.getIngredients().size());
             for (Ingredient ing : recipe.getIngredients()) {
-                if (ing.getItems()[0].getItem() == Items.AIR)
-                    Ingredient.CONTENTS_STREAM_CODEC.encode(buf, Ingredient.EMPTY);
+                if (ing.items().findFirst().get().value() == Items.AIR)
+                    Ingredient.CONTENTS_STREAM_CODEC.encode(buf, EmptyIngredient.create());
                 else
                     Ingredient.CONTENTS_STREAM_CODEC.encode(buf, ing);
             }

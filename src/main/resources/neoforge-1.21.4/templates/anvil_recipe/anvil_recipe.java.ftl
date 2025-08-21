@@ -2,7 +2,7 @@
 
 package ${package}.anvilrecipes;
 
-@Mod.EventBusSubscriber
+@EventBusSubscriber
 public class ${name}AnvilRecipe {
 
     @SubscribeEvent

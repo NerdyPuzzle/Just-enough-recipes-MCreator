@@ -7,7 +7,7 @@ public class ${JavaModName}AnvilRecipes implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-    	return new ResourceLocation("${modid}:anvil_recipes");
+    	return ResourceLocation.parse("${modid}:anvil_recipes");
     }
 
     @Override
@@ -18,7 +18,7 @@ public class ${JavaModName}AnvilRecipes implements IModPlugin {
         <#list anvilrecipes as recipe>
             rightItem = ${mappedMCItemToItemStackCode(recipe.rightitem)};
             rightItem.setCount(${recipe.rightcost});
-            anvilRecipes.add(factory.createAnvilRecipe(${mappedMCItemToItemStackCode(recipe.leftitem)}, List.of(rightItem.copy()), List.of(${mappedMCItemToItemStackCode(recipe.output)})));
+            anvilRecipes.add(factory.createAnvilRecipe(${mappedMCItemToItemStackCode(recipe.leftitem)}, List.of(rightItem.copy()), List.of(${mappedMCItemToItemStackCode(recipe.output)}), ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
         </#list>
         registration.addRecipes(RecipeTypes.ANVIL, anvilRecipes);
     }

@@ -12,7 +12,7 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-    	return new ResourceLocation("${modid}:jei_plugin");
+    	return ResourceLocation.parse("${modid}:jei_plugin");
     }
 
 	@Override
@@ -25,10 +25,8 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
-		RecipeManager recipeManager = Objects.requireNonNull(Minecraft.getInstance().level).getRecipeManager();
-
 		<#list jeirecipetypes as type>
-            List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = recipeManager.getAllRecipesFor(${type.getModElement().getName()}Recipe.Type.INSTANCE);
+            List<${type.getModElement().getName()}Recipe> ${type.getModElement().getName()}Recipes = ${JavaModName}RecipeTypes.recipes.byType(${type.getModElement().getName()}Recipe.Type.INSTANCE).stream().map(RecipeHolder::value).collect(Collectors.toList());
             registration.addRecipes(${type.getModElement().getName()}_Type, ${type.getModElement().getName()}Recipes);
 		</#list>
 	}

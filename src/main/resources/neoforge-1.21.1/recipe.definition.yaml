@@ -31,6 +31,11 @@ templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/recipe/brewing/@NAMEBrewingRecipe.java"
     condition: "recipeType %= Brewing"
 
+  - template: recipe/unlocking_advancement.json.ftl # loaded from datapack generator
+    writer: json
+    name: "@MODDATAROOT/advancement/recipes/@registryname.json"
+    condition: "hasAdvancement()"
+
 global_templates:
   - template: jei_brewing/brewing_plugin.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameBrewingRecipes.java"

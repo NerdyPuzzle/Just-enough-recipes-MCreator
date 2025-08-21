@@ -25,7 +25,10 @@ import net.mcreator.workspace.elements.ModElement;
 import net.nerdypuzzle.jei.parts.JeiSlotList;
 import net.nerdypuzzle.jei.parts.WTextureComboBoxRenderer;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -162,6 +165,9 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         return recipe;
     }
 
+    @Override public @Nullable URI contextURL() throws URISyntaxException {
+        return null;
+    }
 
 }
 

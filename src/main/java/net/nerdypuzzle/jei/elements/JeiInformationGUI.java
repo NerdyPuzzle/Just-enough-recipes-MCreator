@@ -11,8 +11,11 @@ import net.mcreator.ui.modgui.ModElementGUI;
 import net.mcreator.ui.validation.AggregatedValidationResult;
 import net.mcreator.workspace.elements.ModElement;
 
+import javax.annotation.Nullable;
 import javax.swing.*;
 import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.function.Function;
 
 public class JeiInformationGUI extends ModElementGUI<JeiInformation> {
@@ -64,6 +67,10 @@ public class JeiInformationGUI extends ModElementGUI<JeiInformation> {
         info.items = items.getListElements();
         info.information = information.getTextList();
         return info;
+    }
+
+    @Override public @Nullable URI contextURL() throws URISyntaxException {
+        return null;
     }
 
 }

@@ -7,7 +7,7 @@ public class ${JavaModName}JeiInformation implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-    	return new ResourceLocation("${modid}:information");
+    	return ResourceLocation.parse("${modid}:information");
     }
 
     @Override

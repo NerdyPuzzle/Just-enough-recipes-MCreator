@@ -28,7 +28,11 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
             List<ItemStack> inputStack = new ArrayList<>();
 		    <#list brewingRecipes as recipe>
                 <#if recipe.brewingIngredientStack.getUnmappedValue().startsWith("TAG:")>
-                    ingredientStack = new ArrayList<ItemStack>(BuiltInRegistries.ITEM.getOrCreateTag(ItemTags.create(ResourceLocation.parse("${recipe.brewingIngredientStack?replace("TAG:","")}"))).stream().map(item -> new ItemStack((Item) item.value())).collect(Collectors.toCollection(ArrayList::new)));
+                    ingredientStack = (ArrayList<ItemStack>) StreamSupport.stream(
+                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingIngredientStack?replace("TAG:","")}"))).spliterator(),
+                        false
+                    ).map(item -> new ItemStack(item.value()))
+                    .collect(Collectors.toCollection(ArrayList::new));
                 <#else>
                     ingredientStack.add(${mappedMCItemToItemStackCode(recipe.brewingIngredientStack)});
                 </#if>
@@ -36,7 +40,7 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
 		                <#if recipe.brewingReturnStack?starts_with("POTION:") && recipe.brewingInputStack?starts_with("POTION:")>
                             potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
                             potion2.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")}));
-                            brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), potion2.copy()));
+                            brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), potion2.copy(), ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
                             ingredientStack.clear();
 		                <#elseif recipe.brewingReturnStack?starts_with("POTION:")>
                             <#if recipe.brewingInputStack.getUnmappedValue().startsWith("TAG:")>
@@ -45,12 +49,12 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                                 inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                             </#if>
 		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
-		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), potion.copy()));
+		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), potion.copy(), ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		                    ingredientStack.clear();
 		                    inputStack.clear();
 		                <#else>
 		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
-		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
+		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		                    ingredientStack.clear();
 		                </#if>
 		        <#else>
@@ -59,7 +63,7 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                     <#else>
                         inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                     </#if>
-                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}));
+                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		            inputStack.clear();
 		            ingredientStack.clear();
 		        </#if>

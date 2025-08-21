@@ -44,7 +44,11 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                             ingredientStack.clear();
 		                <#elseif recipe.brewingReturnStack?starts_with("POTION:")>
                             <#if recipe.brewingInputStack.getUnmappedValue().startsWith("TAG:")>
-                                inputStack = new ArrayList<ItemStack>(BuiltInRegistries.ITEM.getOrCreateTag(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).stream().map(item -> new ItemStack((Item) item.value())).collect(Collectors.toCollection(ArrayList::new)));
+                                inputStack = (ArrayList<ItemStack>) StreamSupport.stream(
+                                    BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
+                                    false
+                                    ).map(item -> new ItemStack(item.value()))
+                                    .collect(Collectors.toCollection(ArrayList::new));
                             <#else>
                                 inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                             </#if>
@@ -59,7 +63,11 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
 		                </#if>
 		        <#else>
                     <#if recipe.brewingInputStack.getUnmappedValue().startsWith("TAG:")>
-                        inputStack = new ArrayList<ItemStack>(BuiltInRegistries.ITEM.getOrCreateTag(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).stream().map(item -> new ItemStack((Item) item.value())).collect(Collectors.toCollection(ArrayList::new)));
+                        inputStack = (ArrayList<ItemStack>) StreamSupport.stream(
+                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
+                        false
+                        ).map(item -> new ItemStack(item.value()))
+                        .collect(Collectors.toCollection(ArrayList::new));
                     <#else>
                         inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                     </#if>

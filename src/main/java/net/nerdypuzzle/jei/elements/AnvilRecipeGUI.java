@@ -65,12 +65,8 @@ public class AnvilRecipeGUI extends ModElementGUI<AnvilRecipe> {
         page1group.addValidationElement(output);
 
         pane1.add(PanelUtils.totalCenterInPanel(mainPanel));
-        addPage(pane1);
+        addPage(pane1).validate(page1group);
 
-    }
-
-    protected AggregatedValidationResult validatePage(int page) {
-        return new AggregatedValidationResult(new ValidationGroup[]{this.page1group});
     }
 
     public void openInEditingMode(AnvilRecipe recipe) {

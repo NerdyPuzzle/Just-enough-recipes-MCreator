@@ -111,6 +111,9 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
         mainPane.add(integersPane);
         mainPane.add(stringsPane);
 
+        integers.setEnabled(enabledIntegers);
+        strings.setEnabled(enabledStrings);
+
         pane3.add(PanelUtils.totalCenterInPanel(mainPane));
         this.addPage(pane3).lazyValidate(this::validatePage);
 

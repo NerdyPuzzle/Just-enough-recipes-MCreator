@@ -26,6 +26,7 @@ public class JeiRecipeType extends GeneratableElement implements IGUI {
     public boolean enableCraftingtable;
     public boolean enableIntList;
     public boolean enableStringList;
+    public boolean disableJeiBorder;
     public String title;
     public List<JeiSlotListEntry> slotList = new ArrayList<>();
 

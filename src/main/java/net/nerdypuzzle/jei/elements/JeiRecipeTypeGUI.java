@@ -46,6 +46,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     private JSpinner height;
     private JCheckBox enableIntList;
     private JCheckBox enableStringList;
+    private JCheckBox disableJeiBorder;
     private final ValidationGroup page1group = new ValidationGroup();
 
     private JeiGuiEditor guiEditor;
@@ -64,6 +65,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         enableCraftingtable = L10N.checkbox("elementgui.common.enable", new Object[0]);
         enableIntList = L10N.checkbox("elementgui.common.enable", new Object[0]);
         enableStringList = L10N.checkbox("elementgui.common.enable", new Object[0]);
+        disableJeiBorder = L10N.checkbox("elementgui.common.enable", new Object[0]);
         this.initGUI();
         super.finalizeGUI();
     }
@@ -108,7 +110,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         mainPanel.add(subPanel2);
         ComponentUtils.deriveFont(title, 16.0F);
 
-        JPanel advancedPanel = new JPanel(new GridLayout(2, 2, 0, 2));
+        JPanel advancedPanel = new JPanel(new GridLayout(3, 2, 0, 2));
         advancedPanel.setOpaque(false);
         advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/intlist"), L10N.label("elementgui.jeirecipetype.intlist", new Object[0])));
         advancedPanel.add(enableIntList);
@@ -116,6 +118,9 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/stringlist"), L10N.label("elementgui.jeirecipetype.stringlist", new Object[0])));
         advancedPanel.add(enableStringList);
         enableStringList.setOpaque(false);
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/disable_border"), L10N.label("elementgui.jeirecipetype.disable_border", new Object[0])));
+        advancedPanel.add(disableJeiBorder);
+        disableJeiBorder.setOpaque(false);
 
         JPanel advancedSubPanel = new JPanel(new BorderLayout());
         advancedSubPanel.setOpaque(false);
@@ -201,6 +206,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         enableCraftingtable.setSelected(jeiRecipe.enableCraftingtable);
         enableIntList.setSelected(jeiRecipe.enableIntList);
         enableStringList.setSelected(jeiRecipe.enableStringList);
+        disableJeiBorder.setSelected(jeiRecipe.disableJeiBorder);
         textureSelector.setSelectedItem(jeiRecipe.textureSelector);
         slotList.setEntries(jeiRecipe.slotList);
         width.setValue(jeiRecipe.width);
@@ -244,6 +250,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         recipe.enableCraftingtable = enableCraftingtable.isSelected();
         recipe.enableIntList = enableIntList.isSelected();
         recipe.enableStringList = enableStringList.isSelected();
+        recipe.disableJeiBorder = disableJeiBorder.isSelected();
         recipe.title = title.getText();
         recipe.slotList = slotList.getEntries();
         recipe.width = (int) width.getValue();

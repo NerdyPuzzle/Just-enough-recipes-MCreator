@@ -42,6 +42,13 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
         return this.background.getHeight();
     }
 
+    <#if data.disableJeiBorder>
+    @Override
+	public boolean needsRecipeBorder() {
+		return false;
+	}
+    </#if>
+
     @Override
     public void draw(${name}Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);

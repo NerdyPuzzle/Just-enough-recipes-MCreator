@@ -73,7 +73,7 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
 			</#if>
 			guiGraphics.drawString(mc.font,
 				<#if hasProcedure(component.text)><@valueProvider component.text/><#else>Component.translatable("gui.${modid}.${registryname}.${component.getName()}")</#if>,
-				${component.gx(data.width)}, ${component.gy(data.height) - 28}, ${component.color.getRGB()}, false);
+				${component.gx(data.width)}, ${component.gy(data.height) - 28}, ${component.color.getRGB()}, ${component.hasShadow});
 		</#list>
 
 		<#list data.getComponentsOfType("EntityModel") as component>

@@ -13,6 +13,7 @@ import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.procedure.AbstractProcedureSelector;
 import net.mcreator.ui.procedure.ProcedureSelector;
 import net.mcreator.ui.procedure.StringProcedureSelector;
+import net.mcreator.ui.wysiwyg.WYSIWYGEditor;
 import net.mcreator.workspace.elements.VariableTypeLoader;
 import net.nerdypuzzle.jei.parts.gui.JeiGuiEditor;
 
@@ -43,14 +44,14 @@ public class JeiLabelDialog extends AbstractWYSIWYGDialog<Label> {
 
         StringProcedureSelector labelText = new StringProcedureSelector(IHelpContext.NONE.withEntry("gui/label_text"),
                 editor.mcreator, L10N.t("elementgui.common.value"), ProcedureSelector.Side.BOTH, false, textField, 200,
-                Dependency.fromString("x:number/y:number/z:number/world:world/entity:entity/strings:stringlist"));
+                Dependency.fromString("x:number/y:number/z:number/world:world/entity:entity"));
         labelText.refreshList(context);
 
         ProcedureSelector displayCondition = new ProcedureSelector(
                 IHelpContext.NONE.withEntry("gui/label_display_condition"), editor.mcreator,
                 L10N.t("dialog.gui.label_event_display_condition"), ProcedureSelector.Side.CLIENT, false,
                 VariableTypeLoader.BuiltInTypes.LOGIC,
-                Dependency.fromString("x:number/y:number/z:number/world:world/entity:entity/strings:stringlist"));
+                Dependency.fromString("x:number/y:number/z:number/world:world/entity:entity"));
         displayCondition.refreshList(context);
 
         JPanel options = new JPanel();
@@ -66,7 +67,10 @@ public class JeiLabelDialog extends AbstractWYSIWYGDialog<Label> {
 
         cola.setColor(new Color(60, 60, 60));
 
+        final JCheckBox hasShadow = L10N.checkbox("elementgui.common.enable");
+
         options.add(PanelUtils.join(FlowLayout.LEFT, L10N.label("dialog.gui.label_text_color"), cola));
+        options.add(PanelUtils.join(FlowLayout.LEFT, L10N.label("dialog.gui.label_text_shadow"), hasShadow));
 
         final JComboBox<GUIComponent.AnchorPoint> anchor = new JComboBox<>(GUIComponent.AnchorPoint.values());
         anchor.setSelectedItem(GUIComponent.AnchorPoint.CENTER);
@@ -82,6 +86,7 @@ public class JeiLabelDialog extends AbstractWYSIWYGDialog<Label> {
             ok.setText(L10N.t("dialog.common.save_changes"));
             labelText.setSelectedProcedure(label.text);
             cola.setColor(label.color);
+            hasShadow.setSelected(label.hasShadow);
             displayCondition.setSelectedProcedure(label.displayCondition);
             anchor.setSelectedItem(label.anchorPoint);
         }
@@ -101,7 +106,7 @@ public class JeiLabelDialog extends AbstractWYSIWYGDialog<Label> {
 
                 String name = textToMachineName(editor.getComponentList(), "label_", nameBase);
 
-                Label component = new Label(name, 0, 0, textProcedure, cola.getColor(),
+                Label component = new Label(name, 0, 0, textProcedure, cola.getColor(), hasShadow.isSelected(),
                         displayCondition.getSelectedProcedure());
                 setEditingComponent(component);
                 editor.editor.addComponent(component);
@@ -111,7 +116,7 @@ public class JeiLabelDialog extends AbstractWYSIWYGDialog<Label> {
                 int idx = editor.components.indexOf(label);
                 editor.components.remove(label);
                 Label labelNew = new Label(label.name, label.getX(), label.getY(), textProcedure, cola.getColor(),
-                        displayCondition.getSelectedProcedure());
+                        hasShadow.isSelected(), displayCondition.getSelectedProcedure());
                 editor.components.add(idx, labelNew);
                 setEditingComponent(labelNew);
             }

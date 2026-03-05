@@ -12,6 +12,7 @@ import net.mcreator.ui.init.UIRES;
 import net.mcreator.ui.laf.themes.Theme;
 import net.mcreator.ui.validation.IValidable;
 import net.mcreator.ui.validation.Validator;
+import net.mcreator.ui.validation.ValidationResult;
 import net.mcreator.util.FilenameUtilsPatched;
 import net.mcreator.util.StringUtils;
 import net.mcreator.util.image.ImageUtils;
@@ -38,7 +39,7 @@ public abstract class JItemListFieldMulti<T> extends JPanel implements IValidabl
     private final JToggleButton include;
     private final JToggleButton exclude;
     private Validator validator;
-    private Validator.ValidationResult currentValidationResult;
+    private ValidationResult currentValidationResult;
     private final DefaultListModel<T> elementsListModel;
     protected final JList<T> elementsList;
     protected final MCreator mcreator;
@@ -258,26 +259,26 @@ public abstract class JItemListFieldMulti<T> extends JPanel implements IValidabl
     public void paint(Graphics g) {
         super.paint(g);
         if (this.currentValidationResult != null) {
-            if (this.currentValidationResult.getValidationResultType() == Validator.ValidationResultType.WARNING) {
+            if (this.currentValidationResult.type() == ValidationResult.Type.WARNING) {
                 g.drawImage(UIRES.get("18px.warning").getImage(), 0, 0, 13, 13, (ImageObserver)null);
                 g.setColor(new Color(238, 229, 113));
-            } else if (this.currentValidationResult.getValidationResultType() == Validator.ValidationResultType.ERROR) {
+            } else if (this.currentValidationResult.type() == ValidationResult.Type.ERROR) {
                 g.drawImage(UIRES.get("18px.remove").getImage(), 0, 0, 13, 13, (ImageObserver)null);
                 g.setColor(new Color(204, 108, 108));
-            } else if (this.currentValidationResult.getValidationResultType() == Validator.ValidationResultType.PASSED) {
+            } else if (this.currentValidationResult.type() == ValidationResult.Type.PASSED) {
                 g.drawImage(UIRES.get("18px.ok").getImage(), 0, 0, 13, 13, (ImageObserver)null);
                 g.setColor(new Color(79, 192, 121));
             }
 
-            if (this.currentValidationResult.getValidationResultType() == Validator.ValidationResultType.ERROR || this.currentValidationResult.getValidationResultType() == Validator.ValidationResultType.WARNING) {
+            if (this.currentValidationResult.type() == ValidationResult.Type.ERROR || this.currentValidationResult.type() == ValidationResult.Type.WARNING) {
                 g.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
             }
         }
 
     }
 
-    public Validator.ValidationResult getValidationStatus() {
-        Validator.ValidationResult validationResult = this.validator == null ? null : this.validator.validateIfEnabled(this);
+    public ValidationResult getValidationStatus() {
+        ValidationResult validationResult = this.validator == null ? null : this.validator.validateIfEnabled(this);
         this.currentValidationResult = validationResult;
         this.repaint();
         return validationResult;

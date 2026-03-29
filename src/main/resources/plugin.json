@@ -3,8 +3,7 @@
   "weight": 3001,
   "javaplugin": "net.nerdypuzzle.jei.Launcher",
   "supportedversions": [
-    2026001,
-    202600110319
+    2026001
   ],
   "info": {
     "name": "Just enough recipes",

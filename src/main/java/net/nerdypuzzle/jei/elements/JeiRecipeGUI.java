@@ -68,6 +68,8 @@ public class JeiRecipeGUI extends ModElementGUI<JeiRecipe> {
                     resultCount = recipe.getResultCount();
                     enabledIntegers = recipe.enableIntList;
                     enabledStrings = recipe.enableStringList;
+                    integers.setEnabled(enabledIntegers);
+                    strings.setEnabled(enabledStrings);
                     recipetype = recipe.getModElement().getName();
                 }
             }

@@ -15,7 +15,8 @@ import net.mcreator.ui.validation.AggregatedValidationResult;
 import net.mcreator.ui.validation.ValidationGroup;
 import net.mcreator.ui.validation.component.VComboBox;
 import net.mcreator.ui.validation.component.VTextField;
-import net.mcreator.ui.validation.validators.ConditionalItemListFieldValidator;
+import net.mcreator.ui.validation.validators.ConditionalValidator;
+import net.mcreator.ui.validation.validators.ItemListFieldValidator;
 import net.mcreator.ui.validation.validators.MCItemHolderValidator;
 import net.mcreator.ui.validation.validators.TextFieldValidator;
 import net.mcreator.ui.workspace.resources.TextureType;
@@ -137,7 +138,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         this.page1group.addValidationElement(title);
         this.icon.setValidator(new MCItemHolderValidator(this.icon));
         this.page1group.addValidationElement(icon);
-        this.craftingtables.setValidator(new ConditionalItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"), () -> !this.enableCraftingtable.isSelected(), false));
+        this.craftingtables.setValidator(new ConditionalValidator(() -> !this.enableCraftingtable.isSelected(), new ItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"))));
         this.page1group.addValidationElement(craftingtables);
 
         if (!this.isEditingMode()) {

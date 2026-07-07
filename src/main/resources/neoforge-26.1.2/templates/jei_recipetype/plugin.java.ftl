@@ -11,8 +11,8 @@ public class ${JavaModName}JeiPlugin implements IModPlugin {
     </#list>
 
     @Override
-    public ResourceLocation getPluginUid() {
-    	return ResourceLocation.parse("${modid}:jei_plugin");
+    public Identifier getPluginUid() {
+    	return Identifier.parse("${modid}:jei_plugin");
     }
 
 	@Override

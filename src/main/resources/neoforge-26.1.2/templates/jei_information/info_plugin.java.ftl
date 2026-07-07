@@ -6,8 +6,8 @@ package ${package}.init;
 public class ${JavaModName}JeiInformation implements IModPlugin {
 
     @Override
-    public ResourceLocation getPluginUid() {
-    	return ResourceLocation.parse("${modid}:information");
+    public Identifier getPluginUid() {
+    	return Identifier.parse("${modid}:information");
     }
 
     @Override

@@ -63,7 +63,7 @@ public class EmptyIngredient implements ICustomIngredient {
     public static void registerIngredientType(RegisterEvent event) {
         if (event.getRegistryKey().equals(NeoForgeRegistries.Keys.INGREDIENT_TYPES)) {
             event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES,
-                ResourceLocation.fromNamespaceAndPath("${modid}", "empty"),
+                Identifier.fromNamespaceAndPath("${modid}", "empty"),
                 () -> TYPE
             );
         }

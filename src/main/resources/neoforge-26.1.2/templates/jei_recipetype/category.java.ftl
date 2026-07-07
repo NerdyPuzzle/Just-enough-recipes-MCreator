@@ -4,8 +4,8 @@
 package ${package}.jei_recipes;
 
 public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
-    public final static ResourceLocation UID = ResourceLocation.parse("${modid}:${data.getModElement().getRegistryName()}");
-    public final static ResourceLocation TEXTURE = ResourceLocation.parse("${modid}:textures/screens/${data.textureSelector}");
+    public final static Identifier UID = Identifier.parse("${modid}:${data.getModElement().getRegistryName()}");
+    public final static Identifier TEXTURE = Identifier.parse("${modid}:textures/screens/${data.textureSelector}");
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -50,12 +50,12 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
     </#if>
 
     @Override
-    public void draw(${name}Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(${name}Recipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
         this.background.draw(guiGraphics);
 
 		<#list data.getComponentsOfType("JeiSprite") as component>
 			<#if hasProcedure(component.displayCondition)>if (<@valueProvider component.displayCondition/>) {</#if>
-				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, ResourceLocation.parse("${modid}:textures/screens/${component.sprite}"),
+				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, Identifier.parse("${modid}:textures/screens/${component.sprite}"),
 					${component.gx(data.width)}, ${component.gy(data.height) - 32},
 					<#if (component.getTextureWidth(w.getWorkspace()) > component.getTextureHeight(w.getWorkspace()))>
 						<@getSpriteByIndex component "width"/>, 0
@@ -71,7 +71,7 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
 			<#if hasProcedure(component.displayCondition)>
 				if (<@valueProvider component.displayCondition/>)
 			</#if>
-			guiGraphics.drawString(mc.font,
+			guiGraphics.text(mc.font,
 				<#if hasProcedure(component.text)><@valueProvider component.text/><#else>Component.translatable("gui.${modid}.${registryname}.${component.getName()}")</#if>,
 				${component.gx(data.width)}, ${component.gy(data.height) - 28}, ${component.color.getRGB()}, ${component.hasShadow});
 		</#list>
@@ -80,10 +80,7 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
 			<#assign followMouse = component.followMouseMovement>
 			<#assign x = component.gx(data.width)>
 			<#assign y = component.gy(data.height) - 28>
-			if (<@valueProvider component.entityModel/> instanceof LivingEntity livingEntity) {
-				<#if hasProcedure(component.displayCondition)>
-					if (<@valueProvider component.displayCondition/>)
-				</#if>
+			if (<@valueProvider component.entityModel/> instanceof LivingEntity livingEntity<#if hasProcedure(component.displayCondition)>&& <@valueProvider component.displayCondition/></#if>) {
 				var poseStack = guiGraphics.pose();
                 int leftPos = (int) poseStack.m20;
                 int topPos = (int) poseStack.m21;

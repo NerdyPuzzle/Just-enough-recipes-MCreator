@@ -81,10 +81,7 @@ public class ${name}RecipeCategory implements IRecipeCategory<${name}Recipe> {
 			    <#assign followMouse = component.followMouseMovement>
 			    <#assign x = component.gx(data.width)>
 			    <#assign y = component.gy(data.height) - 28>
-			    if (<@valueProvider component.entityModel/> instanceof LivingEntity livingEntity) {
-				    <#if hasProcedure(component.displayCondition)>
-					    if (<@valueProvider component.displayCondition/>)
-				    </#if>
+			    if (<@valueProvider component.entityModel/> instanceof LivingEntity livingEntity<#if hasProcedure(component.displayCondition)>&& <@valueProvider component.displayCondition/></#if>) {
 				    var poseStack = guiGraphics.pose().last().pose();
                     int leftPos = (int) poseStack.m03();
                     int topPos = (int) poseStack.m13();

@@ -15,7 +15,7 @@ public class ${JavaModName}RecipeTypes {
 
             <#list jeirecipetypes as type>
                 RECIPE_TYPES.register("${type.getModElement().getRegistryName()}", () -> ${type.getModElement().getName()}Recipe.Type.INSTANCE);
-                SERIALIZERS.register("${type.getModElement().getRegistryName()}", () -> ${type.getModElement().getName()}Recipe.Serializer.INSTANCE);
+                SERIALIZERS.register("${type.getModElement().getRegistryName()}", () -> ${type.getModElement().getName()}Recipe.SERIALIZER);
             </#list>
 		});
     }

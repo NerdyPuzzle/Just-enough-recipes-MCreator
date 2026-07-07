@@ -6,8 +6,8 @@ package ${package}.init;
 public class ${JavaModName}BrewingRecipes implements IModPlugin {
 
     @Override
-    public ResourceLocation getPluginUid() {
-    	return ResourceLocation.parse("${modid}:brewing_recipes");
+    public Identifier getPluginUid() {
+    	return Identifier.parse("${modid}:brewing_recipes");
     }
 
     <#assign brewingRecipes = []>
@@ -29,7 +29,7 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
 		    <#list brewingRecipes as recipe>
                 <#if recipe.brewingIngredientStack.getUnmappedValue().startsWith("TAG:")>
                     ingredientStack = (ArrayList<ItemStack>) StreamSupport.stream(
-                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingIngredientStack?replace("TAG:","")}"))).spliterator(),
+                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(Identifier.parse("${recipe.brewingIngredientStack?replace("TAG:","")}"))).spliterator(),
                         false
                     ).map(item -> new ItemStack(item.value()))
                     .collect(Collectors.toCollection(ArrayList::new));
@@ -40,12 +40,12 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
 		                <#if recipe.brewingReturnStack?starts_with("POTION:") && recipe.brewingInputStack?starts_with("POTION:")>
                             potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
                             potion2.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingReturnStack?replace("POTION:",""), "potions")}));
-                            brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), potion2.copy(), ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
+                            brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), potion2.copy(), Identifier.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
                             ingredientStack.clear();
 		                <#elseif recipe.brewingReturnStack?starts_with("POTION:")>
                             <#if recipe.brewingInputStack.getUnmappedValue().startsWith("TAG:")>
                                 inputStack = (ArrayList<ItemStack>) StreamSupport.stream(
-                                    BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
+                                    BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(Identifier.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
                                     false
                                     ).map(item -> new ItemStack(item.value()))
                                     .collect(Collectors.toCollection(ArrayList::new));
@@ -53,25 +53,25 @@ public class ${JavaModName}BrewingRecipes implements IModPlugin {
                                 inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                             </#if>
 		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
-		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), potion.copy(), ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
+		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), potion.copy(), Identifier.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		                    ingredientStack.clear();
 		                    inputStack.clear();
 		                <#else>
 		                    potion.set(DataComponents.POTION_CONTENTS, new PotionContents(${generator.map(recipe.brewingInputStack?replace("POTION:",""), "potions")}));
-		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
+		                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), potion.copy(), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, Identifier.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		                    ingredientStack.clear();
 		                </#if>
 		        <#else>
                     <#if recipe.brewingInputStack.getUnmappedValue().startsWith("TAG:")>
                         inputStack = (ArrayList<ItemStack>) StreamSupport.stream(
-                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(ResourceLocation.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
+                        BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.create(Identifier.parse("${recipe.brewingInputStack?replace("TAG:","")}"))).spliterator(),
                         false
                         ).map(item -> new ItemStack(item.value()))
                         .collect(Collectors.toCollection(ArrayList::new));
                     <#else>
                         inputStack.add(${mappedMCItemToItemStackCode(recipe.brewingInputStack)});
                     </#if>
-                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, ResourceLocation.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
+                    brewingRecipes.add(factory.createBrewingRecipe(List.copyOf(ingredientStack), List.copyOf(inputStack), ${mappedMCItemToItemStackCode(recipe.brewingReturnStack)}, Identifier.parse("${modid}:${recipe.getModElement().getRegistryName()}")));
 		            inputStack.clear();
 		            ingredientStack.clear();
 		        </#if>

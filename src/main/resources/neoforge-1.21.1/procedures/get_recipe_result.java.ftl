@@ -7,9 +7,9 @@
             net.minecraft.world.item.crafting.RecipeManager rm = _lvl.getRecipeManager();
             List<${recipeName}Recipe> recipes = rm.getAllRecipesFor(${recipeName}Recipe.Type.INSTANCE).stream().map(RecipeHolder::value).collect(Collectors.toList());
             for (${recipeName}Recipe recipe : recipes) {
-                NonNullList<Ingredient> ingredients = recipe.getIngredients();
+                NonNullList<Ingredient> _ingredients = recipe.getIngredients();
                 <#list input_list$entry as entry>
-                    if (!ingredients.get(${entry?index}).test(${mappedMCItemToItemStackCode(entry)}))
+                    if (!_ingredients.get(${entry?index}).test(${mappedMCItemToItemStackCode(entry)}))
                         continue;
                 </#list>
                 return recipe.getResultItems().get(0).copy();

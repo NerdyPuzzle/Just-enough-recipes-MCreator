@@ -12,6 +12,14 @@
       "check": "RecipeResult"
     },
     {
+      "type": "field_checkbox",
+      "name": "shapeless",
+      "checked": false
+    },
+    {
+      "type": "input_dummy"
+    },
+    {
       "type": "input_statement",
       "name": "foreach"
     }
@@ -36,7 +44,8 @@
       }
     ],
     "fields": [
-      "recipe"
+      "recipe",
+      "shapeless"
     ],
     "dependencies": [
       {

@@ -1,4 +1,4 @@
-for (ItemStack itemstack : ${input$result}) {
-    ItemStack itemstackiterator = itemstack.copy();
+for (ItemStack _itemstack : ${input$result}) {
+    ItemStack itemstackiterator = _itemstack.copy();
     ${statement$foreach}
 }

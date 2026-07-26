@@ -10,9 +10,9 @@
             recipes = ${JavaModName}RecipeTypes.recipes.byType(${recipeName}Recipe.Type.INSTANCE).stream().map(RecipeHolder::value).collect(Collectors.toList());
         }
         for (${recipeName}Recipe recipe : recipes) {
-            List<Ingredient> ingredients = recipe.getIngredients();
+            List<Ingredient> _ingredients = recipe.getIngredients();
             <#list input_list$entry as entry>
-                if (!ingredients.get(${entry?index}).test(${mappedMCItemToItemStackCode(entry)}))
+                if (!_ingredients.get(${entry?index}).test(${mappedMCItemToItemStackCode(entry)}))
                     continue;
             </#list>
             return recipe.getResultItems().get(0).copy();

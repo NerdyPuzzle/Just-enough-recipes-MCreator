@@ -138,7 +138,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         this.page1group.addValidationElement(title);
         this.icon.setValidator(new MCItemHolderValidator(this.icon));
         this.page1group.addValidationElement(icon);
-        this.craftingtables.setValidator(new ConditionalValidator(() -> !this.enableCraftingtable.isSelected(), new ItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"))));
+        this.craftingtables.setValidator(new ConditionalValidator(() -> this.enableCraftingtable.isSelected(), new ItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"))));
         this.page1group.addValidationElement(craftingtables);
 
         if (!this.isEditingMode()) {

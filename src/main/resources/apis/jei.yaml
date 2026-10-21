@@ -49,4 +49,29 @@ neoforge-26.1.2:
   update_files:
     - ~
 
+neoforge-26.3:
+  gradle: |
+    repositories {
+      maven {
+        name = "Progwml6's maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+      }
+      maven {
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+      }
+      maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+      }
+    }
+    
+    dependencies {
+        compileOnly("mezz.jei:jei-26.3-common-api:31.16.0.87")
+        compileOnly("mezz.jei:jei-26.3-neoforge-api:31.16.0.87")
+        runtimeOnly("mezz.jei:jei-26.3-neoforge:31.16.0.87")
+    }
+  update_files:
+    - ~
+
 name: "Just enough items"

@@ -16,9 +16,8 @@ import net.mcreator.ui.validation.ValidationGroup;
 import net.mcreator.ui.validation.component.VComboBox;
 import net.mcreator.ui.validation.component.VTextField;
 import net.mcreator.ui.validation.validators.ConditionalValidator;
-import net.mcreator.ui.validation.validators.ItemListFieldValidator;
 import net.mcreator.ui.validation.validators.MCItemHolderValidator;
-import net.mcreator.ui.validation.validators.TextFieldValidator;
+import net.mcreator.ui.validation.validators.NonEmptyValidator;
 import net.mcreator.ui.workspace.resources.TextureType;
 import net.mcreator.util.StringUtils;
 import net.mcreator.workspace.elements.ModElement;
@@ -55,7 +54,7 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
     public JeiRecipeTypeGUI(MCreator mcreator, ModElement modElement, boolean editingMode) {
         super(mcreator, modElement, editingMode);
         guiEditor = new JeiGuiEditor(mcreator);
-        title = new VTextField(24);
+        title = new VTextField(24).requireValue("elementgui.jeirecipetype.recipetype_needs_title").enableRealtimeValidation();
         craftingtables = new MCItemListField(mcreator, ElementUtil::loadBlocksAndItemsAndTags, false, false);
         textureSelector= new SearchableComboBox((String[])mcreator.getFolderManager().getTexturesList(TextureType.SCREEN).stream().map(File::getName).toArray((x$0) -> {
             return new String[x$0];
@@ -133,12 +132,10 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
         pane1.add(PanelUtils.northAndCenterElement(PanelUtils.join(0, new Component[]{nwPanel}), slotList));
 
-        this.title.setValidator(new TextFieldValidator(this.title, L10N.t("elementgui.jeirecipetype.recipetype_needs_title", new Object[0])));
-        this.title.enableRealtimeValidation();
         this.page1group.addValidationElement(title);
         this.icon.setValidator(new MCItemHolderValidator(this.icon));
         this.page1group.addValidationElement(icon);
-        this.craftingtables.setValidator(new ConditionalValidator(() -> this.enableCraftingtable.isSelected(), new ItemListFieldValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"))));
+        this.craftingtables.setValidator(new ConditionalValidator(() -> this.enableCraftingtable.isSelected(), new NonEmptyValidator(this.craftingtables, L10N.t("elementgui.jeirecipetype.crafting_empty"))));
         this.page1group.addValidationElement(craftingtables);
 
         if (!this.isEditingMode()) {

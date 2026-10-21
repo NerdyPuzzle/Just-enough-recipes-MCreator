@@ -11,8 +11,7 @@ import net.mcreator.ui.init.L10N;
 import net.mcreator.ui.procedure.AbstractProcedureSelector;
 import net.mcreator.ui.procedure.ProcedureSelector;
 import net.mcreator.ui.validation.ValidationResult;
-import net.mcreator.ui.validation.Validator;
-import net.mcreator.ui.validation.validators.ProcedureSelectorValidator;
+import net.mcreator.ui.validation.validators.NonEmptyValidator;
 import net.mcreator.workspace.elements.VariableTypeLoader;
 import net.nerdypuzzle.jei.parts.gui.JeiGuiEditor;
 
@@ -39,7 +38,8 @@ public class JeiEntityModelDialog extends AbstractWYSIWYGDialog<EntityModel> {
                 VariableTypeLoader.BuiltInTypes.ENTITY,
                 Dependency.fromString("x:number/y:number/z:number/world:world/entity:entity/strings:stringlist"));
         entityModel.refreshList(context);
-        entityModel.setValidator(new ProcedureSelectorValidator(entityModel));
+        entityModel.setValidator(
+                new NonEmptyValidator(entityModel, L10N.t("elementgui.gui.error_entity_model_needs_provider")));
 
         ProcedureSelector displayCondition = new ProcedureSelector(
                 IHelpContext.NONE.withEntry("gui/entity_model_display_condition"), editor.mcreator,

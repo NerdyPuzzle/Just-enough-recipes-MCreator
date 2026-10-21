@@ -1,0 +1,2 @@
+reciperesult: List<ItemStack>
+stringlist: List<String>

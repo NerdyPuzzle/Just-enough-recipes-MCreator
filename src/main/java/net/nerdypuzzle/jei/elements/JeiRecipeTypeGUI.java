@@ -62,10 +62,10 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         slotList = new JeiSlotList(this.mcreator, this);
         width = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
         height = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
-        enableCraftingtable = L10N.checkbox("elementgui.common.enable", new Object[0]);
-        enableIntList = L10N.checkbox("elementgui.common.enable", new Object[0]);
-        enableStringList = L10N.checkbox("elementgui.common.enable", new Object[0]);
-        disableJeiBorder = L10N.checkbox("elementgui.common.enable", new Object[0]);
+        enableCraftingtable = L10N.checkbox("elementgui.common.enable");
+        enableIntList = L10N.checkbox("elementgui.common.enable");
+        enableStringList = L10N.checkbox("elementgui.common.enable");
+        disableJeiBorder = L10N.checkbox("elementgui.common.enable");
         this.initGUI();
         super.finalizeGUI();
     }
@@ -78,13 +78,13 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         pane1.setOpaque(false);
         JPanel mainPanel = new JPanel(new GridLayout(5, 2, 0, 2));
         mainPanel.setOpaque(false);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/title"), L10N.label("elementgui.jeirecipetype.title", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/title"), L10N.label("elementgui.jeirecipetype.title")));
         mainPanel.add(title);
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/icon"), L10N.label("elementgui.jeirecipetype.icon", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/icon"), L10N.label("elementgui.jeirecipetype.icon")));
         mainPanel.add(icon);
 
         JPanel subPanel3 = new JPanel(new GridLayout(1, 2, 0, 2));
-        subPanel3.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/crafting_table"), L10N.label("elementgui.jeirecipetype.crafting_table", new Object[0])));
+        subPanel3.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/crafting_table"), L10N.label("elementgui.jeirecipetype.crafting_table")));
         subPanel3.setOpaque(false);
         enableCraftingtable.setOpaque(false);
         subPanel3.add(enableCraftingtable);
@@ -95,16 +95,16 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
             craftingtables.setEnabled(enableCraftingtable.isSelected());
         });
 
-        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/background"), L10N.label("elementgui.jeirecipetype.background", new Object[0])));
+        mainPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/background"), L10N.label("elementgui.jeirecipetype.background")));
         mainPanel.add(textureSelector);
         JPanel subPanel1 = new JPanel(new GridLayout(1, 3, 0, 1));
         subPanel1.setOpaque(false);
         JPanel subPanel2 = new JPanel(new GridLayout(1, 2, 0, 1));
         subPanel2.setOpaque(false);
-        subPanel1.add(L10N.label("elementgui.jeirecipetype.width", new Object[0]));
+        subPanel1.add(L10N.label("elementgui.jeirecipetype.width"));
         subPanel1.add(width);
         subPanel1.add(new JEmptyBox());
-        subPanel2.add(L10N.label("elementgui.jeirecipetype.height", new Object[0]));
+        subPanel2.add(L10N.label("elementgui.jeirecipetype.height"));
         subPanel2.add(height);
         mainPanel.add(subPanel1);
         mainPanel.add(subPanel2);
@@ -112,13 +112,13 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
         JPanel advancedPanel = new JPanel(new GridLayout(3, 2, 0, 2));
         advancedPanel.setOpaque(false);
-        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/intlist"), L10N.label("elementgui.jeirecipetype.intlist", new Object[0])));
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/intlist"), L10N.label("elementgui.jeirecipetype.intlist")));
         advancedPanel.add(enableIntList);
         enableIntList.setOpaque(false);
-        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/stringlist"), L10N.label("elementgui.jeirecipetype.stringlist", new Object[0])));
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/stringlist"), L10N.label("elementgui.jeirecipetype.stringlist")));
         advancedPanel.add(enableStringList);
         enableStringList.setOpaque(false);
-        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/disable_border"), L10N.label("elementgui.jeirecipetype.disable_border", new Object[0])));
+        advancedPanel.add(HelpUtils.wrapWithHelpButton(this.withEntry("jei/disable_border"), L10N.label("elementgui.jeirecipetype.disable_border")));
         advancedPanel.add(disableJeiBorder);
         disableJeiBorder.setOpaque(false);
 
@@ -163,8 +163,8 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         guiEditorPanel.add("Center", guiEditor);
         guiEditorPanel.add("East", guiEditor.sidebar);
 
-        addPage(L10N.t("elementgui.common.page_properties", new Object[0]), pane1).lazyValidate(() -> validatePage());
-        addPage(L10N.t("elementgui.jeirecipetype.gui_editor", new Object[0]), guiEditorPanel);
+        addPage(L10N.t("elementgui.common.page_properties"), pane1).lazyValidate(() -> validatePage());
+        addPage(L10N.t("elementgui.jeirecipetype.gui_editor"), guiEditorPanel);
     }
 
     public void reloadDataLists() {
@@ -174,9 +174,9 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
     protected AggregatedValidationResult validatePage() {
         if (!mcreator.getWorkspaceSettings().getDependencies().contains("jei"))
-            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jei.needs_api", new Object[0]));
+            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jei.needs_api"));
         else if (textureSelector.getSelectedItem().isEmpty()) {
-            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipetype.missing_texture", new Object[0]));
+            return new AggregatedValidationResult.FAIL(L10N.t("elementgui.jeirecipetype.missing_texture"));
         }
         return new AggregatedValidationResult(new ValidationGroup[]{this.page1group});
     }
@@ -227,10 +227,10 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
         updateGuiImage();
         guiEditor.renderBgLayer.setSelected(!textureSelector.getSelectedItem().isEmpty());
         if (jeiRecipe.gridSettings != null) {
-            guiEditor.sx.setValue(jeiRecipe.gridSettings.sx);
-            guiEditor.sy.setValue(jeiRecipe.gridSettings.sy);
-            guiEditor.ox.setValue(jeiRecipe.gridSettings.ox);
-            guiEditor.oy.setValue(jeiRecipe.gridSettings.oy);
+            guiEditor.sx.setValue(jeiRecipe.gridSettings.spacingX);
+            guiEditor.sy.setValue(jeiRecipe.gridSettings.spacingY);
+            guiEditor.ox.setValue(jeiRecipe.gridSettings.offsetX);
+            guiEditor.oy.setValue(jeiRecipe.gridSettings.offsetY);
             guiEditor.snapOnGrid.setSelected(jeiRecipe.gridSettings.snapOnGrid);
             if (jeiRecipe.gridSettings.snapOnGrid) {
                 guiEditor.editor.showGrid = true;
@@ -256,10 +256,10 @@ public class JeiRecipeTypeGUI extends ModElementGUI<JeiRecipeType> {
 
         // Gui editor
         recipe.components = guiEditor.getComponentList();
-        recipe.gridSettings.sx = (int) guiEditor.sx.getValue();
-        recipe.gridSettings.sy = (int) guiEditor.sy.getValue();
-        recipe.gridSettings.ox = (int) guiEditor.ox.getValue();
-        recipe.gridSettings.oy = (int) guiEditor.oy.getValue();
+        recipe.gridSettings.spacingX = (int) guiEditor.sx.getValue();
+        recipe.gridSettings.spacingY = (int) guiEditor.sy.getValue();
+        recipe.gridSettings.offsetX = (int) guiEditor.ox.getValue();
+        recipe.gridSettings.offsetY = (int) guiEditor.oy.getValue();
         recipe.gridSettings.snapOnGrid = guiEditor.snapOnGrid.isSelected();
 
         return recipe;
